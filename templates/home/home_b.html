@@ -1,0 +1,208 @@
+{% extends 'base_b.html' %}
+
+{% block imports %}
+    <link rel="stylesheet" href="/static/css/bootswatch_paper.css"/>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h5 class="pull-left"><span class="glyphicon glyphicon-dashboard"></span> CPU Information</h5>
+
+                            <div class="btn-default btn-sm pull-right">
+                                <span class="glyphicon glyphicon-repeat"></span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body">
+                            <p>
+                                <b># of Cores:</b> {{ ctx.cpu.cores }}
+                                <br/>
+                                <b>CPU Usage:</b> {{ ctx.cpu.usage }}
+                            </p>
+
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" style="width: {{ ctx.cpu.usage }}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h5 class="pull-left"><span class="glyphicon glyphicon-time"></span> Uptime</h5>
+
+                            <div class="btn-default btn-sm pull-right">
+                                <span class="glyphicon glyphicon-repeat"></span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body">
+                            <p>
+                                <b>Time since boot:</b> {{ ctx.uptime }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h5 class="pull-left"><span class="glyphicon glyphicon-cog"></span> RAM Information</h5>
+
+                            <div class="btn-default btn-sm pull-right">
+                                <span class="glyphicon glyphicon-repeat"></span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body">
+                            <p>
+                                <b>RAM Capacity:</b> {{ ctx.ram.capacity }}
+                                <br/>
+                                <b>RAM Usage:</b> {{ ctx.ram.usage }}
+                            </p>
+
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" style="width: {{ ctx.ram.usage }}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h5 class="pull-left"><span class="glyphicon glyphicon-globe"></span> Network Usage</h5>
+
+                            <div class="btn-default btn-sm pull-right">
+                                <span class="glyphicon glyphicon-repeat"></span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body">
+                            <p>
+                                <b>Download:</b> {{ ctx.network.download }}
+                                <br/>
+                                <b>Upload:</b> {{ ctx.network.upload }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5 class="pull-left"><span class="glyphicon glyphicon-hdd"></span> Disks</h5>
+
+                    <div class="btn-default btn-sm pull-right">
+                        <span class="glyphicon glyphicon-repeat"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    {% if ctx.disks %}
+                        {% for disk, data in ctx.disks.iteritems() %}
+                            <p>
+                                <b>{{ disk }} - {{ data.capacity }}</b>
+                            </p>
+                            <span class="pull-left">Used: {{ data.used }}</span>
+                            <span class="pull-right">Free: {{ data.free }}</span>
+                            <div class="clearfix"></div>
+
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" style="width: {{ data.percent }}"></div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted">No disk data available.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5 class="pull-left"><span class="glyphicon glyphicon-tasks"></span> Processes</h5>
+
+                    <div class="btn-default btn-sm pull-right">
+                        <span class="glyphicon glyphicon-repeat"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    {% if ctx.processes %}
+                        <table class="table table-responsive">
+                            <tr>
+                                <th>Name</th>
+                                <th>PID</th>
+                                <th>CPU Usage</th>
+                                <th>RAM Usage</th>
+                            </tr>
+                            {% for process in ctx.processes %}
+                                <tr>
+                                    <td>{{ process.name }}</td>
+                                    <td>{{ process.pid }}</td>
+                                    <td>{{ process.cpu_usage }}</td>
+                                    <td>{{ process.ram_usage }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                        <p>No process data, or no running processes matching filters</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {#        #}
+    {##}
+    {#    <div class="card" id="card-ram">#}
+    {#        <p>#}
+    {#            <core-icon icon="memory"></core-icon>RAM Usage: 46%#}
+    {#        </p>#}
+    {#        <paper-progress value="46%"></paper-progress>#}
+    {#    </div>#}
+    {##}
+    {##}
+    {##}
+    {#    <div class="card" id="card-network">#}
+    {#        <p>#}
+    {#            <core-icon icon="file-download"></core-icon>Download: 4.6GB#}
+    {#        </p>#}
+    {#        <p>#}
+    {#            <core-icon icon="file-upload"></core-icon>Upload: 176.5MB#}
+    {#        </p>#}
+    {#    </div>#}
+    {##}
+    {#    <div class="card" id="card-disk">#}
+    {#        <p>#}
+    {#            <core-icon icon="folder"></core-icon>/ - Available: 24.6GB#}
+    {#        </p>#}
+    {#        <paper-progress value="33%"></paper-progress>#}
+    {#        <p>#}
+    {#            <core-icon icon="folder"></core-icon>/media/ext - Available: 1.71TB#}
+    {#        </p>#}
+    {#        <paper-progress value="25%"></paper-progress>#}
+    {#    </div>#}
+    {##}
+    {#    <div class="card" id="card-process" flex>#}
+    {#        <ul>#}
+    {#            <li><core-icon icon="chevron-right"></core-icon>SickBeard.py - 16548 - 1.0% - 6.5%</li>#}
+    {#            <li><core-icon icon="chevron-right"></core-icon>CouchPotato.py - 4582 - 0.0% - 6.5%</li>#}
+    {#            <li><core-icon icon="chevron-right"></core-icon>deluged - 14852 - 0.0% - 6.5%</li>#}
+    {#            <li><core-icon icon="chevron-right"></core-icon>deluge-web - 14736 - 0.0% - 6.5%</li>#}
+    {#            <li><core-icon icon="chevron-right"></core-icon>SickBeard.py - 16547 - 0.0% - 6.5%</li>#}
+    {#        </ul>#}
+    {#    </div>#}
+
+{% endblock %}

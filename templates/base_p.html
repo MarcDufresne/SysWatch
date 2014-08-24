@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="/static/css/style_p.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,500,300' rel='stylesheet' type='text/css'>
+
+    <script src="/static/bower_components/platform/platform.js"></script>
+    <link rel="import" href="/static/bower_components/core-ajax/core-ajax.html">
+    <link rel="import" href="/static/bower_components/core-icons/core-icons.html">
+    <link rel="import" href="/static/bower_components/core-toolbar/core-toolbar.html">
+    <link rel="import" href="/static/bower_components/core-header-panel/core-header-panel.html">
+
+    {% block imports %}
+    {% endblock %}
+
+    <title>Server Monitor</title>
+</head>
+<body fullbleed unresolved>
+    <core-header-panel>
+        <core-toolbar id="mainheader">
+            <span flex>Server Monitor - Overview</span>
+        </core-toolbar>
+
+    {% block content %}
+    {% endblock %}
+
+    </core-header-panel>
+</body>
+</html>

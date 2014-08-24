@@ -1,0 +1,29 @@
+body {
+  font-family: "Roboto", sans-serif;
+}
+core-header-panel {
+  background: white;
+  height: 100vh;
+  width: 100vw;
+}
+core-toolbar {
+  background-color: #03A9F4;
+}
+
+paper-progress::shadow #activeProgress {
+  background-color: #e91e63;
+}
+
+paper-progress::shadow #progressContainer {
+  background-color: #64ffda;
+}
+
+.card {
+    padding: 30px;
+    margin: 30px;
+    min-width: 30vw;
+}
+
+ul {
+    list-style: none;
+}

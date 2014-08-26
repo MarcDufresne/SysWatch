@@ -104,6 +104,7 @@ def api_get_disk_info(disk='/'):
     return Response(response=json_dumps(ctx), mimetype="application/json")
 
 
+@app.route('/api/process/', defaults={'process_filter': ','.join(PROCESSES)})
 @app.route('/api/process/<process_filter>')
 def api_get_filtered_processes(process_filter=None):
 

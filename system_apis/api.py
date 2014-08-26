@@ -3,72 +3,74 @@ from hardware import *
 
 def get_cpu_info():
 
-    ctx = {
+    cpu_info = {
         'cores': get_cpu_cores_details(),
         'usage': get_current_cpu_usage(),
     }
 
-    return ctx
+    return cpu_info
 
 
 def get_cpu_usage():
 
-    ctx = {
+    cpu_data = {
         'cpu_usage': get_current_cpu_usage(),
     }
 
-    return ctx
+    return cpu_data
 
 
 def get_ram_info():
 
-    ctx = {
+    ram_info = {
         'capacity': get_ram_total_capacity(),
         'usage': get_current_ram_usage(),
     }
 
-    return ctx
+    return ram_info
 
 
 def get_ram_usage():
 
-    ctx = {
+    ram_data = {
         'ram_usage': get_current_ram_usage(),
     }
 
-    return ctx
+    return ram_data
 
 
 def get_uptime():
 
-    ctx = {
+    uptime_data = {
         'uptime': get_system_uptime()
     }
 
-    return ctx
+    return uptime_data
 
 
 def get_network_info():
 
-    ctx = get_network_usage()
+    network_data = get_network_usage()
 
-    return ctx
+    return network_data
 
 
 def get_disk_info(disk='/'):
 
-    ctx = None
+    disk_data = None
     try:
-        ctx = get_disk_usage(mount_point=disk)
+        disk_data = get_disk_usage(mount_point=disk)
     except OSError as e:
         print e.message
 
-    return ctx
+    return disk_data
 
 
-def get_filtered_processes(process_filter=None):
-    ctx = []
+def get_filtered_processes(process_filter=None, sort_key='cpu_usage'):
+    process_list = []
     if process_filter:
-        ctx = get_monitored_process_states(process_list=process_filter)
+        process_list = get_monitored_process_states(process_list=process_filter)
 
-    return ctx
+    process_list = sorted(process_list, reverse=True, key=lambda k: k.get(sort_key, None))
+
+    return process_list

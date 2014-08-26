@@ -1,0 +1,28 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h5 class="pull-left"><span class="glyphicon glyphicon-hdd"></span> Disks</h5>
+
+        <div class="btn-default btn-sm pull-right">
+            <span class="glyphicon glyphicon-repeat"></span>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+        {% if ctx.disks %}
+            {% for disk, data in ctx.disks.iteritems() %}
+                <p>
+                    <b>{{ disk }} - {{ data.capacity }}</b>
+                </p>
+                <span class="pull-left">Used: {{ data.used }}</span>
+                <span class="pull-right">Free: {{ data.free }}</span>
+                <div class="clearfix"></div>
+
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" style="width: {{ data.percent }}"></div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">No disk data available.</p>
+        {% endif %}
+    </div>
+</div>

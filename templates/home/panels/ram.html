@@ -1,0 +1,21 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h5 class="pull-left"><span class="glyphicon glyphicon-cog"></span> RAM Information</h5>
+
+        <div class="btn-default btn-sm pull-right">
+            <span class="glyphicon glyphicon-repeat"></span>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+        <p>
+            <b>RAM Capacity:</b> {{ ctx.ram.capacity }}
+            <br/>
+            <b>RAM Usage:</b> {{ ctx.ram.usage }}
+        </p>
+
+        <div class="progress">
+            <div class="progress-bar progress-bar-success" style="width: {{ ctx.ram.usage }}"></div>
+        </div>
+    </div>
+</div>

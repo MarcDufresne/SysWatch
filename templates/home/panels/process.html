@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h5 class="pull-left"><span class="glyphicon glyphicon-tasks"></span> Processes</h5>
+
+        <div class="btn-default btn-sm pull-right">
+            <span class="glyphicon glyphicon-repeat"></span>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+        {% if ctx.processes %}
+            <table class="table table-responsive">
+                <tr>
+                    <th>Name</th>
+                    <th>PID</th>
+                    <th>CPU Usage</th>
+                    <th>RAM Usage</th>
+                </tr>
+                {% for process in ctx.processes %}
+                    <tr>
+                        <td>{{ process.name }}</td>
+                        <td>{{ process.pid }}</td>
+                        <td>{{ process.cpu_usage }}</td>
+                        <td>{{ process.ram_usage }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No process data, or no running processes matching filters</p>
+        {% endif %}
+    </div>
+</div>

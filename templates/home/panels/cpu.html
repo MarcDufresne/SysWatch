@@ -1,0 +1,21 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h5 class="pull-left"><span class="glyphicon glyphicon-dashboard"></span> CPU Information</h5>
+
+        <div class="btn-default btn-sm pull-right">
+            <span class="glyphicon glyphicon-repeat"></span>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+        <p>
+            <b># of Cores:</b> {{ ctx.cpu.cores }}
+            <br/>
+            <b>CPU Usage:</b> {{ ctx.cpu.usage }}
+        </p>
+
+        <div class="progress">
+            <div class="progress-bar progress-bar-success" style="width: {{ ctx.cpu.usage }}"></div>
+        </div>
+    </div>
+</div>

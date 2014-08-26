@@ -37,7 +37,6 @@ def home():
         'network': network,
         'disks': disks_data,
         'processes': processes,
-
     }
 
     return render_template('home/home.html', ctx=ctx)
@@ -96,7 +95,7 @@ def api_get_network_info():
 @app.route('/api/disk/<path:disk>')
 def api_get_disk_info(disk='/'):
 
-    if disk[:1] != '/':
+    if not disk.startswith('/'):
         disk = '/' + disk
 
     ctx = api.get_disk_info(disk=disk)

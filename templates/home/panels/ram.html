@@ -2,7 +2,7 @@
     <div class="panel-heading">
         <h5 class="pull-left"><span class="glyphicon glyphicon-cog"></span> RAM Information</h5>
 
-        <div class="btn-default btn-sm pull-right">
+        <div class="btn-default btn-sm pull-right" id="refresh-ram">
             <span class="glyphicon glyphicon-repeat"></span>
         </div>
         <div class="clearfix"></div>
@@ -11,11 +11,11 @@
         <p>
             <b>RAM Capacity:</b> {{ ctx.ram.capacity }}
             <br/>
-            <b>RAM Usage:</b> {{ ctx.ram.usage }}
+            <b>RAM Usage:</b> <span id="ram_usage">{{ ctx.ram.usage }}</span>
         </p>
 
         <div class="progress">
-            <div class="progress-bar progress-bar-success" style="width: {{ ctx.ram.usage }}"></div>
+            <div class="progress-bar progress-bar-success" id="ram_usage_bar" style="width: {{ ctx.ram.usage }}"></div>
         </div>
     </div>
 </div>

@@ -2,14 +2,14 @@
     <div class="panel-heading">
         <h5 class="pull-left"><span class="glyphicon glyphicon-time"></span> Uptime</h5>
 
-        <div class="btn-default btn-sm pull-right">
+        <div class="btn-default btn-sm pull-right" id="refresh-uptime">
             <span class="glyphicon glyphicon-repeat"></span>
         </div>
         <div class="clearfix"></div>
     </div>
     <div class="panel-body">
         <p>
-            <b>Time since boot:</b> {{ ctx.uptime }}
+            <b>Time since boot:</b> <span id="uptime">{{ ctx.uptime }}</span>
         </p>
     </div>
 </div>

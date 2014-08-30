@@ -2,24 +2,34 @@
     <div class="panel-heading">
         <h5 class="pull-left"><span class="glyphicon glyphicon-hdd"></span> Disks</h5>
 
-        <div class="btn-default btn-sm pull-right">
+        <div class="btn-default btn-sm pull-right" id="refresh-disks">
             <span class="glyphicon glyphicon-repeat"></span>
         </div>
         <div class="clearfix"></div>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" id="disks_panel">
         {% if ctx.disks %}
             {% for disk, data in ctx.disks.iteritems() %}
-                <p>
-                    <b>{{ disk }} - {{ data.capacity }}</b>
-                </p>
-                <span class="pull-left">Used: {{ data.used }}</span>
-                <span class="pull-right">Free: {{ data.free }}</span>
-                <div class="clearfix"></div>
+                <div id="disk{{ loop.index }}">
+                    <p>
+                        <b>
+                            <span id="disk-name{{ loop.index }}">{{ disk }}</span> -
+                            <span id="disk-capacity{{ loop.index }}">{{ data.capacity }}</span>
+                        </b>
+                    </p>
+                    <span class="pull-left">
+                        Used: <span id="disk-used{{ loop.index }}">{{ data.used }}</span>
+                    </span>
+                    <span class="pull-right">
+                        Free: <span id="disk-free{{ loop.index }}">{{ data.free }}</span>
+                    </span>
+                    <div class="clearfix"></div>
 
-                <div class="progress">
-                    <div class="progress-bar progress-bar-success" style="width: {{ data.percent }}"></div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-success" id="disk-bar{{ loop.index }}" style="width: {{ data.percent }}"></div>
+                    </div>
                 </div>
+
             {% endfor %}
         {% else %}
             <p class="text-muted">No disk data available.</p>

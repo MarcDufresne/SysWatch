@@ -2,16 +2,16 @@
     <div class="panel-heading">
         <h5 class="pull-left"><span class="glyphicon glyphicon-globe"></span> Network Usage</h5>
 
-        <div class="btn-default btn-sm pull-right">
+        <div class="btn-default btn-sm pull-right" id="refresh-network">
             <span class="glyphicon glyphicon-repeat"></span>
         </div>
         <div class="clearfix"></div>
     </div>
     <div class="panel-body">
         <p>
-            <b>Download:</b> {{ ctx.network.download }}
+            <b>Download:</b> <span id="network-download">{{ ctx.network.download }}</span>
             <br/>
-            <b>Upload:</b> {{ ctx.network.upload }}
+            <b>Upload:</b> <span id="network-upload">{{ ctx.network.upload }}</span>
         </p>
     </div>
 </div>

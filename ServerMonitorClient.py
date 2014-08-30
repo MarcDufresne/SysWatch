@@ -37,6 +37,7 @@ def home():
         'network': network,
         'disks': disks_data,
         'processes': processes,
+        'api_base_url': API_URL.format(""),
     }
 
     return render_template('home/home.html', ctx=ctx)
@@ -70,7 +71,7 @@ def api_get_ram_info():
 @app.route('/api/ram/usage/')
 def api_get_ram_usage():
 
-    ctx = api.get_current_ram_usage()
+    ctx = api.get_ram_usage()
 
     return Response(response=json_dumps(ctx), mimetype="application/json")
 
@@ -78,7 +79,7 @@ def api_get_ram_usage():
 @app.route('/api/uptime/')
 def api_get_uptime():
 
-    ctx = api.get_system_uptime()
+    ctx = api.get_uptime()
 
     return Response(response=json_dumps(ctx), mimetype="application/json")
 
@@ -90,6 +91,16 @@ def api_get_network_info():
 
     return Response(response=json_dumps(ctx), mimetype="application/json")
 
+
+@app.route('/api/disks/')
+def api_get_all_disks_info():
+    disks_data = {}
+    for disk in DISKS:
+        data = api.get_disk_info(disk)
+        if data:
+            disks_data[disk] = data
+
+    return Response(response=json_dumps(disks_data), mimetype="application/json")
 
 @app.route('/api/disk/', defaults={'disk': '/'})
 @app.route('/api/disk/<path:disk>')

@@ -5,9 +5,12 @@ from flask.templating import render_template
 
 from system_apis import api
 
-from config import *
+import config
 
 app = Flask(__name__)
+
+DISKS = ()
+PROCESSES = ()
 
 
 @app.route('/')
@@ -16,7 +19,11 @@ def home():
     cpu_info = api.get_cpu_info()
     ram_info = api.get_ram_info()
     network = api.get_network_info()
-    processes = api.get_filtered_processes(PROCESSES)
+
+    if PROCESSES:
+        processes = api.get_filtered_processes(PROCESSES.split(','))
+    else:
+        processes = []
 
     disks_data = {}
     for disk in DISKS:
@@ -37,7 +44,6 @@ def home():
         'network': network,
         'disks': disks_data,
         'processes': processes,
-        'api_base_url': API_URL.format(""),
     }
 
     return render_template('home/home.html', ctx=ctx)
@@ -114,12 +120,14 @@ def api_get_disk_info(disk='/'):
     return Response(response=json_dumps(ctx), mimetype="application/json")
 
 
-@app.route('/api/process/', defaults={'process_filter': ','.join(PROCESSES)})
+@app.route('/api/process/', defaults={'process_filter': PROCESSES})
 @app.route('/api/process/<process_filter>')
 def api_get_filtered_processes(process_filter=None):
 
-    if process_filter:
-        process_filter = process_filter.split(',')
+    if not process_filter:
+        process_filter = PROCESSES if PROCESSES else ''
+
+    process_filter = process_filter.split(',')
 
     ctx = api.get_filtered_processes(process_filter)
 
@@ -127,5 +135,8 @@ def api_get_filtered_processes(process_filter=None):
 
 
 if __name__ == '__main__':
-    app.config.from_pyfile("config.py")
-    app.run(threaded=True, host='0.0.0.0')
+    config.check_config_file()
+    app_config = config.load_config_file()
+    PROCESSES = app_config.get('processes')
+    DISKS = app_config.get('disks', '').split(',')
+    app.run(threaded=True, host='0.0.0.0', debug=True)
